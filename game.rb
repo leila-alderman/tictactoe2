@@ -1,12 +1,14 @@
-require './player.rb'
-require './board.rb'
+# frozen_string_literal: true
+
+require './player'
+require './board'
 
 class Game
   def initialize
     puts "Welcome to console tic-tac-toe! Let's play a game!"
-    puts "Player One: What is your name?"
+    puts 'Player One: What is your name?'
     player_one_name = gets.chomp
-    puts "Player Two: What is your name?"
+    puts 'Player Two: What is your name?'
     player_two_name = gets.chomp
     puts "#{player_one_name}: Would you like to play as 'X' or 'O'?"
     @player_one, @player_two = create_players(player_one_name, player_two_name)
@@ -26,8 +28,8 @@ class Game
       puts "That's not a valid marker. Please try again."
       get_marker
     end
-    return player_one, player_two
-  end 
+    [player_one, player_two]
+  end
 
   def play_round(player, board)
     row, column = player.move
@@ -46,11 +48,11 @@ class Game
     game_active = true
     round = 1
     while game_active == true
-      if round.odd?
-        game_active = play_round(@player_one, @board)
-      else
-        game_active = play_round(@player_two, @board)
-      end
+      game_active = if round.odd?
+                      play_round(@player_one, @board)
+                    else
+                      play_round(@player_two, @board)
+                    end
       puts @board
       round += 1
     end

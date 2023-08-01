@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Player
   attr_reader :name, :marker
 
@@ -11,6 +13,6 @@ class Player
     row = gets.chomp.to_i - 1
     puts "Nice! In which column within that row would you like to place an #{@marker}?"
     column = gets.chomp.to_i - 1
-    return row, column
+    [row, column]
   end
 end

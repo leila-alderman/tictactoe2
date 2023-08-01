@@ -1,23 +1,23 @@
+# frozen_string_literal: true
+
 class Board
   attr_accessor :state
 
   def initialize
-    @state = Array.new(3) { Array.new(3, ' ')}
+    @state = Array.new(3) { Array.new(3, ' ') }
   end
 
   def to_s
-    string = ""
+    string = ''
     @state.each_with_index do |row, row_index|
       row.each_with_index do |space, space_index|
-        if space_index == 2
-          string += "  #{space}\n"
-        else
-          string += "  #{space}  |" 
-        end
+        string += if space_index == 2
+                    "  #{space}\n"
+                  else
+                    "  #{space}  |"
+                  end
       end
-      if row_index != 2
-        string += "-----------------\n"
-      end
+      string += "-----------------\n" if row_index != 2
     end
     string
   end
@@ -30,18 +30,18 @@ class Board
     @state.each do |row|
       return false if row.include?(' ')
     end
-    return true
+    true
   end
 
   def win?
     # check for a horizontal win condition
     @state.each do |row|
-      return true if row.eql?(['X', 'X', 'X']) || row.eql?(['O', 'O', 'O'])
+      return true if row.eql?(%w[X X X]) || row.eql?(%w[O O O])
     end
 
     # check for a vertical win condition
     @state.transpose.each do |row|
-      return true if row.eql?(['X', 'X', 'X']) || row.eql?(['O', 'O', 'O'])
+      return true if row.eql?(%w[X X X]) || row.eql?(%w[O O O])
     end
 
     # check for a diagonal win condition
@@ -51,18 +51,17 @@ class Board
     return true if @state[0][2] == 'O' && @state[1][1] == 'O' && @state[2][0] == 'O'
 
     # if none of the above win conditions have been met, no one has won yet
-    return false
+    false
   end
 
   def game_over?(current_player)
-    if self.win?
+    if win?
       puts "Congratulations, #{current_player.name}, you've won!"
       return false
-    elsif self.full?
+    elsif full?
       puts "Sorry, looks like no one won this time. It's a draw!"
       return false
     end
-    return true
+    true
   end
-
-end 
+end
