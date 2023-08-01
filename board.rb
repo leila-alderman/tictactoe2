@@ -23,7 +23,7 @@ class Board
   end
 
   def valid_move?(row, column)
-    @state[row][column] == ' '
+    @state.dig(row, column) == ' '
   end
 
   def full?
